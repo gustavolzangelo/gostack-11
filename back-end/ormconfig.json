@@ -1,4 +1,5 @@
-{
+[{
+  "name": "default",
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
@@ -14,4 +15,41 @@
   "cli":{
     "migrationsDir": "./src/database/migrations"
   }
+},
+{
+  "name": "production",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "admin",
+  "database": "gostack_barber",
+  "entities": [
+    "./src/models/*.ts"
+  ],
+  "migrations":[
+    "./src/database/migrations/*.ts"
+  ],
+  "cli":{
+    "migrationsDir": "./src/database/migrations"
+  }
+},
+{
+  "name": "development",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "admin",
+  "database": "gostack_barber_qa",
+  "entities": [
+    "./src/models/*.ts"
+  ],
+  "migrations":[
+    "./src/database/migrations/*.ts"
+  ],
+  "cli":{
+    "migrationsDir": "./src/database/migrations"
+  }
 }
+]

@@ -8,7 +8,10 @@ import CreateAppointmentService from '../services/CreateAppointmentService';
 const appointmentsRouter = Router();
 
 appointmentsRouter.get('/', async (request, response) => {
-  const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  const appointmentsRepository = getCustomRepository(
+    AppointmentsRepository,
+    process.env.NODE_ENV,
+  );
   const appointments = await appointmentsRepository.find();
 
   return response.json(appointments);
@@ -17,6 +20,13 @@ appointmentsRouter.get('/', async (request, response) => {
 appointmentsRouter.post('/', async (request, response) => {
   try {
     const { provider, date } = request.body;
+
+    if (!provider) {
+      return response.status(400).json({ error: 'provider not informed' });
+    }
+    if (!date) {
+      return response.status(400).json({ error: 'date not informed' });
+    }
 
     const parsedDate = parseISO(date);
 
