@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "test": "jest --watchAll",
+    "test": "jest --coverage --watchAll --no-cache",
     "dev:server": "set NODE_ENV=development&& ts-node-dev  --inspect --transpile-only --ignore-watch node_modules src/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
