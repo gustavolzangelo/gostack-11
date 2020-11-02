@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
@@ -19,13 +19,22 @@ appointmentsRouter.get('/', async (request, response) => {
 
 appointmentsRouter.post('/', async (request, response) => {
   try {
-    const { provider, date } = request.body;
+    const { provider_id, date } = request.body;
 
-    if (!provider) {
-      return response.status(400).json({ error: 'provider not informed' });
+    if (!provider_id) {
+      return response.status(400).json({ error: 'provider_id not informed' });
     }
     if (!date) {
       return response.status(400).json({ error: 'date not informed' });
+    }
+
+    const usersRepository = getRepository('users', process.env.NODE_ENV);
+
+    const user = await usersRepository.findOne({ where: { id: provider_id } });
+    if (!user) {
+      return response
+        .status(400)
+        .json({ error: 'Does not exist an user with given id' });
     }
 
     const parsedDate = parseISO(date);
@@ -34,7 +43,7 @@ appointmentsRouter.post('/', async (request, response) => {
 
     const appointment = await createAppointment.execute({
       date: parsedDate,
-      provider,
+      provider_id,
     });
 
     return response.json(appointment);

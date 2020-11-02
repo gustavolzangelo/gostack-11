@@ -9,15 +9,25 @@ usersRouter.post('/', async (request, response) => {
 
     const createUser = new CreateUserService();
 
+    if (!name) {
+      return response.status(400).json({ error: 'Name not informed' });
+    }
+    if (!email) {
+      return response.status(400).json({ error: 'Email not informed' });
+    }
+    if (!password) {
+      return response.status(400).json({ error: 'Password not informed' });
+    }
+
     const user = await createUser.execute({
       name,
       email,
       password,
     });
 
-    const { userPassword: password, ...userResponse } = user;
+    const { password: userPassword, ...userResponse } = user;
 
-    return response.send(user);
+    return response.send(userResponse);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
