@@ -9,8 +9,20 @@ interface Request {
   password: string;
 }
 
+interface UserResponse {
+  id: string;
+  name: string;
+  password?: string;
+  email: string;
+  created_at: Date;
+  updated_at: Date;
+}
 class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
+  public async execute({
+    name,
+    email,
+    password,
+  }: Request): Promise<UserResponse> {
     const usersRepository = getRepository(User, process.env.NODE_ENV);
 
     const checkUserExistis = await usersRepository.findOne({

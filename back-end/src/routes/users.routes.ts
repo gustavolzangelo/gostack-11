@@ -25,10 +25,11 @@ usersRouter.post('/', async (request, response) => {
       password,
     });
 
-    const { password: userPassword, ...userResponse } = user;
+    delete user.password;
 
-    return response.send(userResponse);
+    return response.send(user);
   } catch (err) {
+    /* istanbul ignore next */
     return response.status(400).json({ error: err.message });
   }
 });

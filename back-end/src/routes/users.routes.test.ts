@@ -58,4 +58,13 @@ describe('appointments routes test', () => {
       email: 'gao@gmail.com',
     });
   });
+  it('post an user with existing email', async () => {
+    const response = await request(app).post('/users').send({
+      name: 'Gustavo',
+      email: 'gao@gmail.com',
+      password: '12345',
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ error: 'Email address already used' });
+  });
 });

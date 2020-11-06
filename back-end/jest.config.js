@@ -4,7 +4,8 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.{ts,tsx}",
     "!**/node_modules/**",
-    "!**/database/**"
+    "!**/database/**",
+    "src/{!(server)}.ts"
   ]
 
 }
