@@ -39,9 +39,8 @@ describe('appointments routes test', () => {
     });
   });
 
-  let user;
   it('post an user with invalid password', async () => {
-    user = await request(app).post('/users').send({
+    await request(app).post('/users').send({
       name: 'Gustavo',
       email: 'gao@gmail.com',
       password: '12345',
